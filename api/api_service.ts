@@ -1,27 +1,21 @@
-// import axios from "axios";
-// const API_BASE_URL = "https://manarbe.oetest.tech/api/v1/ar";
-// const axiosInstance = axios.create({
-//   baseURL: API_BASE_URL,
-//   headers: { "Content-Type": "application/json" },
-// });
-//  const apiService = {
-//     create: async (endpoint:string, data:any) => {
-//         const response = await axiosInstance.post(`/${endpoint}`, data);
-//         return response.data;
-//       } 
-//  }
-// export default apiService;
-
-
 import axios from "axios";
+import { Platform } from "react-native";
 
-const api = axios.create({
-  baseURL: "https://manarbe.oetest.tech/api/v1/ar",
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
+const API_BASE_URL = "https://manarbe.oetest.tech/api/v1/ar";
+
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  headers: { "Content-Type": "application/json" },
 });
+
+const apiService = {
+  create: async (endpoint: string, data: any) => {
+    const response = await axiosInstance.post(endpoint, data);
+    return response.data;
+  },
+};
+
+export default apiService;
 
 export const loginApi = async (mobile: string, password: string) => {
   const body = {
@@ -30,12 +24,19 @@ export const loginApi = async (mobile: string, password: string) => {
       attributes: {
         mobile,
         password,
-        device_type: "ios", 
+        device_type: Platform.OS,
       },
-      id: "null",
+      id: null,
     },
   };
 
-  const res = await api.post("/auth/login", body);
-  return res.data;
+  try {
+    const res = await apiService.create("auth/login", body);
+    console.log("API Response:", res);
+    return res;
+  } catch (error: any) {
+    console.log("API Error:", error.response?.data || error.message);
+    throw error;
+  }
 };
+

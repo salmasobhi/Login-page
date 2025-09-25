@@ -41,50 +41,70 @@
 
 
 
-// const HomeStore = types
-//   .model({
-//     users: types.map(User),
-//     todos: types.map(Todo)
+
+
+
+
+
+// import { flow, types } from "mobx-state-tree";
+// import { loginApi } from "./api_service";
+
+// const AuthStore = types
+//   .model("AuthStore", {
+     
+//     isLoading: types.optional(types.boolean, false),
+//     error: types.maybeNull(types.string),
 //   })
-//   .views((self) => ({
-//     get pendingCount() {
-//       return Array.from(self.todos.values()).filter((todo) => !todo.done).length
-//     },
-//     get completedCount() {
-//       return Array.from(self.todos.values()).filter((todo) => todo.done).length
-//     }
-//   }))
 //   .actions((self) => ({
-//     addTodo(id, name) {
-//       self.todos.set(id, Todo.create({ name }))
-//     }
-//   }))
+//     login: flow(function* (formData: { mobile: string; password: string }) {
+//       self.isLoading = true;
+//       self.error = null;
+//       try {
+//         const response = yield loginApi(formData.mobile, formData.password);
+//         console.log("Login success:", response);
+//       } catch (err: any) {
+//         self.error = err?.response?.data?.errors?.[0]?.detail || "Login failed";
+//         console.log("Login error:", self.error);
+//       } finally {
+//         self.isLoading = false;
+//       }
+//     }),
+//   }));
+
+// export const authStore = AuthStore.create({});
+
 
 
 
 
 import { flow, types } from "mobx-state-tree";
+import { createUserDefaultModel } from "../models/userModel";
 import { loginApi } from "./api_service";
 
 const AuthStore = types
   .model("AuthStore", {
     isLoading: types.optional(types.boolean, false),
     error: types.maybeNull(types.string),
+    user: createUserDefaultModel(), 
   })
   .actions((self) => ({
     login: flow(function* (formData: { mobile: string; password: string }) {
-      self.isLoading = true;
-      self.error = null;
+      self.isLoading = true
+      self.error = null
       try {
-        const response = yield loginApi(formData.mobile, formData.password);
-        console.log("Login success:", response);
+        const response = yield loginApi(formData.mobile, formData.password)
+        console.log("Login success:", response)
+        if (response?.data) {
+          self.user.fromApi(response.data)
+          return self.user
+        }
       } catch (err: any) {
-        self.error = err?.response?.data?.errors?.[0]?.detail || "Login failed";
-        console.log("Login error:", self.error);
+        self.error = err?.response?.data?.errors?.[0]?.detail || "Login failed"
+        console.log("Login error:", self.error)
       } finally {
-        self.isLoading = false;
+        self.isLoading = false
       }
     }),
-  }));
+  }))
 
-export const authStore = AuthStore.create({});
+export const authStore = AuthStore.create({})

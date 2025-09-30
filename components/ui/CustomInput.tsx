@@ -1,0 +1,74 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
+
+interface CustomInputProps {
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  error?: string;
+  secureTextEntry?: boolean;
+  keyboardType?: "default" | "email-address" | "numeric" | "phone-pad";
+}
+
+const CustomInput: React.FC<CustomInputProps> = ({
+  placeholder,
+  value,
+  onChangeText,
+  error,
+  secureTextEntry = false,
+  keyboardType = "default",
+}) => {
+  const [isSecure, setIsSecure] = useState(secureTextEntry);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={onChangeText}
+          secureTextEntry={isSecure}
+          keyboardType={keyboardType}
+        />
+        {secureTextEntry && (
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => setIsSecure(!isSecure)}
+          >
+            <MaterialCommunityIcons
+              name={isSecure ? "eye-off" : "eye"}
+              size={22}
+              color="#666"
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { marginBottom: 15 },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+  },
+  input: { flex: 1, height: 50 },
+  icon: { marginLeft: 10 },
+  error: { color: "red", marginTop: 5, fontSize: 12 },
+});
+
+export default CustomInput;

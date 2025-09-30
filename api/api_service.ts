@@ -16,7 +16,6 @@ const apiService = {
 };
 
 export default apiService;
-
 export const loginApi = async (mobile: string, password: string) => {
   const body = {
     data: {

@@ -133,7 +133,6 @@
 
 
 
-
 import { useFormik } from "formik";
 import React from "react";
 import {
@@ -165,7 +164,6 @@ const validate = (values: FormValues) => {
   }
   return errors;
 };
-
 const LoginScreenRQ: React.FC = () => {
   const loginMutation = useLoginMutation();
 
@@ -188,7 +186,6 @@ const LoginScreenRQ: React.FC = () => {
         error={formik.touched.mobile ? formik.errors.mobile : undefined}
         keyboardType="phone-pad"
       />
-
       <CustomInput
         placeholder="Password"
         value={formik.values.password}

@@ -1,4 +1,3 @@
-
 // import { Platform } from 'react-native';
 // import apiService from './api_service';
 // export interface AuthAttributes {
@@ -22,12 +21,12 @@
 //         attributes: {
 //           mobile: formData.mobile,
 //           password: formData.password,
-//           device_type: deviceType, 
+//           device_type: deviceType,
 //         },
 //         id: null,
 //       },
 //     };
-   
+
 //     try {
 //       const response = await apiService.create("auth/login", requestData);
 //       console.log(response);
@@ -38,7 +37,6 @@
 //   },
 // };
 
-
 import { flow, types } from "mobx-state-tree";
 import { createUserDefaultModel } from "../models/userModel";
 import { loginApi } from "./api_service";
@@ -47,26 +45,26 @@ const AuthStore = types
   .model("AuthStore", {
     isLoading: types.optional(types.boolean, false),
     error: types.maybeNull(types.string),
-    user: createUserDefaultModel(), 
+    user: createUserDefaultModel(),
   })
   .actions((self) => ({
     login: flow(function* (formData: { mobile: string; password: string }) {
-      self.isLoading = true
-      self.error = null
+      self.isLoading = true;
+      self.error = null;
       try {
-        const response = yield loginApi(formData.mobile, formData.password)
-        console.log("Login success:", response)
-       if (response) { 
-  self.user.fromApi(response)
-  return self.user
-}
+        const response = yield loginApi(formData.mobile, formData.password);
+        console.log("Login success:", response);
+        if (response) {
+          self.user.fromApi(response);
+          return self.user;
+        }
       } catch (err: any) {
-        self.error = err?.response?.data?.errors?.[0]?.detail || "Login failed"
-        console.log("Login error:", self.error)
+        self.error = err?.response?.data?.errors?.[0]?.detail || "Login failed";
+        console.log("Login error:", self.error);
       } finally {
-        self.isLoading = false
+        self.isLoading = false;
       }
     }),
-  }))
+  }));
 
-export const authStore = AuthStore.create({})
+export const authStore = AuthStore.create({});

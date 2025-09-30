@@ -14,6 +14,7 @@ export interface User {
   educationalLevelLabel?: string;
   educationalSystemLabel?: string;
   isSubscribed?: boolean;
+  token?: string;
 }
 
 export class userModelRQ {
@@ -35,6 +36,7 @@ export class userModelRQ {
       educationalLevelLabel: data.educational_level_label ?? "",
       educationalSystemLabel: data.educational_system_label ?? "",
       isSubscribed: data.is_subscribed ?? false,
+      token: raw.meta.token ?? "",
     };
   }
 }

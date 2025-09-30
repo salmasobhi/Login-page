@@ -1,10 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../screens/LoginScreen";
+// import LoginScreen from "../screens/LoginScreen";
+import LoginScreenRQ from "../screens/LoginScreenRQ";
 const stack = createNativeStackNavigator();
 const Rootstack =()=>{
   return (
     <stack.Navigator>
-        <stack.Screen name="Login" component={LoginScreen} />
+        {/* <stack.Screen name="Login" component={LoginScreen} /> */}
+          <stack.Screen name="Login" component={LoginScreenRQ} />
     </stack.Navigator>
   )
 }

@@ -14,6 +14,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
+import Toast from 'react-native-toast-message';
 import Rootstack from './navigation/Rootstack';
 const query = new QueryClient()
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
       <NavigationContainer>
         <Rootstack />
       </NavigationContainer>
+      <Toast />
     </QueryClientProvider>
   
   );

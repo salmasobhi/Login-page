@@ -20,7 +20,7 @@ export interface User {
 export class userModelRQ {
   static parse(raw: any): User {
     console.log("raw", raw)
-    const data = raw.data.attributes    
+    const data = raw.data.attributes  
     return {
       id: data.id ?? "",
       type: data.type ?? "",

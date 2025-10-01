@@ -144,12 +144,10 @@ import {
 import CustomButton from "../components/ui/CustomButton";
 import CustomInput from "../components/ui/CustomInput";
 import { useLoginMutation } from "../hooks/useLoginMutation";
-
 interface FormValues {
   mobile: string;
   password: string;
 }
-
 const validate = (values: FormValues) => {
   const errors: Partial<FormValues> = {};
   if (!values.mobile) {
@@ -178,7 +176,6 @@ const LoginScreenRQ: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-
       <CustomInput
         placeholder="Mobile number"
         value={formik.values.mobile}
@@ -193,7 +190,6 @@ const LoginScreenRQ: React.FC = () => {
         error={formik.touched.password ? formik.errors.password : undefined}
         secureTextEntry
       />
-
       {loginMutation.isPending ? (
         <ActivityIndicator
           size="large"
@@ -206,12 +202,11 @@ const LoginScreenRQ: React.FC = () => {
           onPress={formik.handleSubmit as () => void}
         />
       )}
-
       {loginMutation.isError && (
-        <Text style={styles.error}>Login failed</Text>
+        <Text style={styles.error}></Text>
       )}
       {loginMutation.isSuccess && (
-        <Text style={styles.success}>Login successful</Text>
+        <Text style={styles.success}></Text>
       )}
     </View>
   );

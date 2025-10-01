@@ -1,24 +1,14 @@
 
-import { User, userModelRQ } from "@/models/userModelRQ";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { userModelRQ } from "@/models/userModelRQ";
+import showMessage from "@/utils/showMassage";
+import { cacheUser } from "@/utils/storage/cacheUser";
 import { useMutation } from "@tanstack/react-query";
 import { loginApi } from "../api/api_service";
 interface LoginPayload {
   mobile: string;
   password: string;
 }
-export const cacheUser = async (user: User): Promise<User> => {
-  try {
-    const USER_KEY = "user";
-    await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
-    return user;
-  } catch (error) {
-    console.log("Error saving user:", error);
-    throw error;
-  }
-};
-
-export const useLoginMutation = () => {
+export  const useLoginMutation = () => {
   return useMutation({
     mutationFn: ({ mobile, password }: LoginPayload) =>
       loginApi(mobile, password),
@@ -29,9 +19,13 @@ export const useLoginMutation = () => {
       // save user to async storage
        const cacheUsers = await cacheUser(user);
         console.log("cacheUsers", cacheUsers)
+        showMessage (data?.meta?.message)
     },
     onError: (error: any) => {
-      console.log("error", error.response?.data || error.message);
+      const [Error] = error.response?.data?.errors || [];
+      const detail = Error?.detail;
+      console.log("error",detail)
+      showMessage(detail || error.message, "error")  
       return error.response?.data || error.message
     },
   });

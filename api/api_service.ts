@@ -34,7 +34,7 @@ export const loginApi = async (mobile: string, password: string) => {
     console.log("API Response:", res);
     return res;
   } catch (error: any) {
-    console.log("API Error:", error.response?.data || error.message);
+    console.log("API Error:",error.response?.data?.errors?.[0]?.detail  || error.message);
     throw error;
   }
 };

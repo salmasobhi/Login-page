@@ -1,0 +1,12 @@
+{
+  "Login": "تسجيل الدخول",
+  "mobile": "رقم الموبايل",
+  "password": "كلمة المرور",
+  "loginButton": "تسجيل الدخول",
+  "validation": {
+    "mobileRequired": "رقم الموبايل مطلوب",
+    "mobileFormat": "رقم الموبايل يجب أن يكون بالصيغة +20xxxxxxxxxx",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordLength": "كلمة المرور يجب أن تكون على الأقل 8 أحرف"
+  }
+}

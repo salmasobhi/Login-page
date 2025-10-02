@@ -1,15 +1,24 @@
-//validationLogin.ts
-export interface FormErrors {
-    phone: string;
-    password: string;
+import { TFunction } from "i18next";
+
+export interface FormValues {
+  mobile: string;
+  password: string;
 }
-export const validateField = (name: "phone" | "password", value: string): FormErrors | null => {
-    let newErrors: FormErrors = { phone: "", password: "" };
-    if (name === "phone") {
-        newErrors.phone = !/^\d{11}$/.test(value) ? "Phone number must be 11 digits" : "";
-    }
-    if (name === "password") {
-        newErrors.password = value.length < 8 ? "Password must be at least 8 characters" : "";
-    }
-    return newErrors;
+
+export const validate = (values: FormValues, t: TFunction) => {
+  const errors: Partial<FormValues> = {};
+
+  if (!values.mobile) {
+    errors.mobile = t("validation.mobileRequired");
+  } else if (!/^\+20\d{10}$/.test(values.mobile)) {
+    errors.mobile = t("validation.mobileFormat");
+  }
+
+  if (!values.password) {
+    errors.password = t("validation.passwordRequired");
+  } else if (values.password.length < 8) {
+    errors.password = t("validation.passwordLength");
+  }
+
+  return errors;
 };

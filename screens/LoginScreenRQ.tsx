@@ -135,56 +135,54 @@
 
 import { useFormik } from "formik";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from "react-native";
 import CustomButton from "../components/ui/CustomButton";
 import CustomInput from "../components/ui/CustomInput";
 import { useLoginMutation } from "../hooks/useLoginMutation";
-interface FormValues {
-  mobile: string;
-  password: string;
-}
-const validate = (values: FormValues) => {
-  const errors: Partial<FormValues> = {};
-  if (!values.mobile) {
-    errors.mobile = "Mobile number is required";
-  } else if (!/^\+20\d{10}$/.test(values.mobile)) {
-    errors.mobile = "Mobile number must be in this format +20xxxxxxxxxx";
-  }
-  if (!values.password) {
-    errors.password = "Password is required";
-  } else if (values.password.length < 8) {
-    errors.password = "Password must be at least 8 characters";
-  }
-  return errors;
-};
+import i18n from "../utils/localization/i18n";
+import { FormValues, validate } from "../validation/validationLogin";
 const LoginScreenRQ: React.FC = () => {
   const loginMutation = useLoginMutation();
+   const { t } = useTranslation();
 
   const formik = useFormik<FormValues>({
     initialValues: { mobile: "", password: "" },
-    validate,
+    validate: (values) => validate(values, t),
     onSubmit: (values) => {
       loginMutation.mutate(values);
     },
   });
+  const toggleLanguage = async () => {
+  const newLang = i18n.language === "ar" ? "en" : "ar";
+  await i18n.changeLanguage(newLang);
+  formik.validateForm(); 
+};
+
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <TouchableOpacity onPress={toggleLanguage} style={styles.langButton}>
+        <Text style={styles.langButtonText}>
+          {i18n.language === "ar" ? "عربي" : "English"}
+        </Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>{t("Login")}</Text>
       <CustomInput
-        placeholder="Mobile number"
+        placeholder={t("mobile")}
         value={formik.values.mobile}
         onChangeText={formik.handleChange("mobile")}
         error={formik.touched.mobile ? formik.errors.mobile : undefined}
         keyboardType="phone-pad"
       />
       <CustomInput
-        placeholder="Password"
+        placeholder={t("password")}   
         value={formik.values.password}
         onChangeText={formik.handleChange("password")}
         error={formik.touched.password ? formik.errors.password : undefined}
@@ -198,15 +196,9 @@ const LoginScreenRQ: React.FC = () => {
         />
       ) : (
         <CustomButton
-          title="Login"
+          title={t("loginButton")}
           onPress={formik.handleSubmit as () => void}
         />
-      )}
-      {loginMutation.isError && (
-        <Text style={styles.error}></Text>
-      )}
-      {loginMutation.isSuccess && (
-        <Text style={styles.success}></Text>
       )}
     </View>
   );
@@ -220,8 +212,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
+  langButton: {
+    alignSelf: "flex-end",
+    marginBottom: 10,
+    padding: 8,
+    backgroundColor: "#007AFF",
+    borderRadius: 6,
+  },
+  langButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
   error: { color: "red", marginBottom: 8, textAlign: "center" },
   success: { color: "green", marginTop: 10, textAlign: "center" },
 });
 
 export default LoginScreenRQ;
+
+
+
+

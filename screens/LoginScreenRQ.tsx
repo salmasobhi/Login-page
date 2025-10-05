@@ -133,6 +133,7 @@
 
 
 
+import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -153,13 +154,18 @@ import i18n from "../utils/localization/i18n";
 import { FormValues, validate } from "../validation/validationLogin";
 const LoginScreenRQ: React.FC = () => {
   const loginMutation = useLoginMutation();
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const [_, setLangToggle] = useState(false);
   const formik = useFormik<FormValues>({
     initialValues: { mobile: "", password: "" },
     validate: (values) => validate(values, t),
     onSubmit: (values) => {
-      loginMutation.mutate(values);
+      loginMutation.mutate(values, {
+        onSuccess: () => {
+          (navigation as any).navigate("HomeScreen");
+        },
+      });
     },
   });
   const toggleLanguage = async () => {

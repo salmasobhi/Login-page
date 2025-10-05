@@ -8,6 +8,8 @@
     "mobileFormat": "Mobile number must be in this format +20xxxxxxxxxx",
     "passwordRequired": "Password is required",
     "passwordLength": "Password must be at least 8 characters"
-  }
+  },
+  "Hello": "Hello",
+  "Logout": "Logout"
 }
 

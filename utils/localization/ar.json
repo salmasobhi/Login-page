@@ -8,5 +8,7 @@
     "mobileFormat": "رقم الموبايل يجب أن يكون بالصيغة +20xxxxxxxxxx",
     "passwordRequired": "كلمة المرور مطلوبة",
     "passwordLength": "كلمة المرور يجب أن تكون على الأقل 8 أحرف"
-  }
+  },
+    "Hello": "مرحبا",
+    "Logout": "تسجيل الخروج"
 }

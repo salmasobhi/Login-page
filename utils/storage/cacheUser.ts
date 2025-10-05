@@ -14,14 +14,16 @@ export const cacheUser = async (user: User): Promise<User> => {
 export const saveUserLanguage = async (language: string) => {
   try {
     await AsyncStorage.setItem(LANGUAGE_KEY, language);
+    console.log("Language preference saved:", language);
   } catch (error) {
     console.log("Error saving language preference:", error);
   }
 };
 export const getUserLanguage = async (): Promise<string | null> => {
   try {
-   
-    return await AsyncStorage.getItem(LANGUAGE_KEY);
+    const language = await AsyncStorage.getItem(LANGUAGE_KEY);
+    console.log("Language preference retrieved:", language);
+    return language || null;
   } catch (error) {
     console.log("Error getting language preference:", error);
     return null;

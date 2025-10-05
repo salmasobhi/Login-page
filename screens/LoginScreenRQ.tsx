@@ -134,10 +134,13 @@
 
 
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
+  DevSettings,
+  I18nManager,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -150,8 +153,8 @@ import i18n from "../utils/localization/i18n";
 import { FormValues, validate } from "../validation/validationLogin";
 const LoginScreenRQ: React.FC = () => {
   const loginMutation = useLoginMutation();
-   const { t } = useTranslation();
-
+  const { t } = useTranslation();
+  const [_, setLangToggle] = useState(false);
   const formik = useFormik<FormValues>({
     initialValues: { mobile: "", password: "" },
     validate: (values) => validate(values, t),
@@ -160,20 +163,48 @@ const LoginScreenRQ: React.FC = () => {
     },
   });
   const toggleLanguage = async () => {
-  const newLang = i18n.language === "ar" ? "en" : "ar";
-  await i18n.changeLanguage(newLang);
-  formik.validateForm(); 
-};
-
-
+    try {
+      const newLang = i18n.language === "ar" ? "en" : "ar";
+      await i18n.changeLanguage(newLang);
+      formik.validateForm();
+      const isRTL = newLang === "ar";
+        I18nManager.allowRTL(isRTL);
+        I18nManager.forceRTL(isRTL);
+        // Commented out the reload until expo-updates bug is fixed
+        // await Updates.reloadAsync();
+        DevSettings.reload();
+    } catch (error) {
+      console.warn("Language toggle failed:", error);
+    }
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleLanguage} style={styles.langButton}>
-        <Text style={styles.langButtonText}>
-          {i18n.language === "ar" ? "عربي" : "English"}
-        </Text>
-      </TouchableOpacity>
+<View
+  style={{
+    flexDirection: I18nManager.isRTL ? "row-reverse" : "row",
+   justifyContent: I18nManager.isRTL ? "flex-start" : "flex-end",
+  }}
+>
+  <TouchableOpacity onPress={toggleLanguage} style={styles.langButton}>
+    <Image
+      source={
+        i18n.language === "ar"
+          ? require("../assets/images/uk.png")
+          : require("../assets/images/sa.png")
+      }
+      style={styles.flag}
+    />
+    <Text style={styles.langButtonText}>
+      {i18n.language === "ar" ? "English" : "عربي"}
+    </Text>
+  </TouchableOpacity>
+</View>
+
+
+
+      {/* Title */}
       <Text style={styles.title}>{t("Login")}</Text>
+      {/* Mobile Field */}
       <CustomInput
         placeholder={t("mobile")}
         value={formik.values.mobile}
@@ -181,13 +212,15 @@ const LoginScreenRQ: React.FC = () => {
         error={formik.touched.mobile ? formik.errors.mobile : undefined}
         keyboardType="phone-pad"
       />
+      {/* Password Field */}
       <CustomInput
-        placeholder={t("password")}   
+        placeholder={t("password")}
         value={formik.values.password}
         onChangeText={formik.handleChange("password")}
         error={formik.touched.password ? formik.errors.password : undefined}
         secureTextEntry
       />
+      {/* Submit Button or Loader */}
       {loginMutation.isPending ? (
         <ActivityIndicator
           size="large"
@@ -203,7 +236,6 @@ const LoginScreenRQ: React.FC = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", padding: 20 },
   title: {
@@ -212,23 +244,28 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
-  langButton: {
-    alignSelf: "flex-end",
-    marginBottom: 10,
-    padding: 8,
-    backgroundColor: "#007AFF",
-    borderRadius: 6,
-  },
+langButton: {
+  marginBottom: 10,
+  padding: 8,
+  backgroundColor: "#007AFF",
+  borderRadius: 6,
+  flexDirection: "row",
+  alignItems: "center",
+},
+
   langButtonText: {
     color: "#fff",
     fontWeight: "bold",
+
   },
+  flag: {
+  width: 24,
+  height: 16,
+  borderRadius: 3, 
+  marginRight: 8, 
+},
+
   error: { color: "red", marginBottom: 8, textAlign: "center" },
   success: { color: "green", marginTop: 10, textAlign: "center" },
 });
-
 export default LoginScreenRQ;
-
-
-
-

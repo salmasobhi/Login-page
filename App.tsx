@@ -17,6 +17,7 @@ import React from 'react';
 import { I18nManager } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Rootstack from './navigation/Rootstack';
+import './ReactotronConfig';
 
 const query = new QueryClient()
 const App = () => {

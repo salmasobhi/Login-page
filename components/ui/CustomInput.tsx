@@ -110,19 +110,19 @@ const CustomInput: React.FC<CustomInputProps> = ({
       <View
         style={[
           styles.inputWrapper,
-          { flexDirection: isRTL ? "row-reverse" : "row" }, // 🔁 قلب الاتجاه
+          { flexDirection: isRTL ? "row-reverse" : "row" }, 
         ]}
       >
         <TextInput
           style={[
             styles.input,
             {
-              textAlign: isRTL ? "right" : "left",   // ✅ اتجاه النص
-              writingDirection: isRTL ? "rtl" : "ltr", // ✅ اتجاه placeholder
+              textAlign: isRTL ? "right" : "left",   
+              writingDirection: isRTL ? "rtl" : "ltr", 
             },
           ]}
           placeholder={placeholder}
-          placeholderTextColor="#999"   // 🔹 عشان يبقى شكله أوضح
+          placeholderTextColor="#999"   
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={isSecure}
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   input: {
-    flex: 1,          // ✅ عشان الـ input ياخد المساحة كاملة
+    flex: 1,          
     height: 50,
     fontSize: 16,
   },

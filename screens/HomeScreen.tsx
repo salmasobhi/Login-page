@@ -1,82 +1,80 @@
-// import CustomButton from "@/components/ui/CustomButton";
-// import { useQueryUserData } from "@/hooks/UseQueryUserData";
-// import { RootStackNavigationProp } from "@/navigation/Rootstack";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { useNavigation } from "@react-navigation/native";
-// import { useQueryClient } from "@tanstack/react-query";
-// import React from "react";
-// import { Text, View } from "react-native";
+// // import CustomButton from "@/components/ui/CustomButton";
+// // import { useQueryUserData } from "@/hooks/UseQueryUserData";
+// // import { RootStackNavigationProp } from "@/navigation/Rootstack";
+// // import AsyncStorage from "@react-native-async-storage/async-storage";
+// // import { useNavigation } from "@react-navigation/native";
+// // import { useQueryClient } from "@tanstack/react-query";
+// // import React from "react";
+// // import { Text, View } from "react-native";
 
-// export default function HomeScreen() {
-//   const navigation = useNavigation<RootStackNavigationProp>();
-//   const { user, isLoading } = useQueryUserData();
-//   const queryClient = useQueryClient();
+// // export default function HomeScreen() {
+// //   const navigation = useNavigation<RootStackNavigationProp>();
+// //   const { user, isLoading } = useQueryUserData();
+// //   const queryClient = useQueryClient();
 
-//   if (isLoading) return <Text>Loading...</Text>;
+// //   if (isLoading) return <Text>Loading...</Text>;
 
-//   const handleLogout = async () => {
-//     try {
+// //   const handleLogout = async () => {
+// //     try {
 
-//       await AsyncStorage.removeItem("user");
-//       // to remove cache after logout
-//       queryClient.removeQueries({ queryKey: ["user"] });
-//     // reset navigation to LoginScreenRQ (remove all screens)
-//       navigation.reset({
-//         index: 0,
-//         routes: [{ name: "LoginScreenRQ" }],
-//       });
-//       console.log("Logout successful");
-//     } catch (error) {
-//       console.log("Logout error:", error);
-//     }
-//   };
+// //       await AsyncStorage.removeItem("user");
+// //       // to remove cache after logout
+// //       queryClient.removeQueries({ queryKey: ["user"] });
+// //     // reset navigation to LoginScreenRQ (remove all screens)
+// //       navigation.reset({
+// //         index: 0,
+// //         routes: [{ name: "LoginScreenRQ" }],
+// //       });
+// //       console.log("Logout successful");
+// //     } catch (error) {
+// //       console.log("Logout error:", error);
+// //     }
+// //   };
 
-//   return (
-//     <View>
-//       {user ? <Text>Hello {user.name}</Text> : <Text>Guest</Text>}
-//       <CustomButton title="Logout" onPress={handleLogout} />
-//     </View>
-//   );
-// }
+// //   return (
+// //     <View>
+// //       {user ? <Text>Hello {user.name}</Text> : <Text>Guest</Text>}
+// //       <CustomButton title="Logout" onPress={handleLogout} />
+// //     </View>
+// //   );
+// // }
 
 
 import CustomButton from "@/components/ui/CustomButton";
-import { useQueryUserData } from "@/hooks/UseQueryUserData";
+import { User } from "@/models/userModelRQ";
 import { RootStackNavigationProp } from "@/navigation/Rootstack";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
+import { getUserData, handleLogout } from "../utils/storage/cacheUser";
 export default function HomeScreen() {
-  const { t } = useTranslation(); 
+
   const navigation = useNavigation<RootStackNavigationProp>();
-  const { user, isLoading } = useQueryUserData();
-  const queryClient = useQueryClient();
+  const { t } = useTranslation(); 
+  const [userData, setUserData] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userData = await getUserData();
+      if (userData) {
+        setUserData(userData);
+        console.log("User data:", userData.name);
+      }
+      setIsLoading(false);
+    };
+    fetchUserData();
+  }, []);
   if (isLoading) return <Text style={styles.loading}>{t("loading")}</Text>;
-  const handleLogout = async () => {
-    try {
-      await AsyncStorage.removeItem("user");
-      queryClient.removeQueries({ queryKey: ["user"] });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "LoginScreenRQ" }],
-      });
-      console.log("Logout successful");
-    } catch (error) {
-      console.log("Logout error:", error);
-    }
-  };
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.greeting}>
-          {user ? `${t("Hello")}, ${user.name}` : t("Welcome, Guest!")}
+          {userData ? `${t("Hello")}, ${userData.name}` : t("Welcome, Guest!")}
         </Text>
         <CustomButton
           title={t("Logout")}
-          onPress={handleLogout}
+          onPress={() => handleLogout(navigation)}
           style={styles.button as ViewStyle}
         />
       </View>

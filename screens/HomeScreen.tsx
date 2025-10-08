@@ -1,59 +1,23 @@
-// // import CustomButton from "@/components/ui/CustomButton";
-// // import { useQueryUserData } from "@/hooks/UseQueryUserData";
-// // import { RootStackNavigationProp } from "@/navigation/Rootstack";
-// // import AsyncStorage from "@react-native-async-storage/async-storage";
-// // import { useNavigation } from "@react-navigation/native";
-// // import { useQueryClient } from "@tanstack/react-query";
-// // import React from "react";
-// // import { Text, View } from "react-native";
-
-// // export default function HomeScreen() {
-// //   const navigation = useNavigation<RootStackNavigationProp>();
-// //   const { user, isLoading } = useQueryUserData();
-// //   const queryClient = useQueryClient();
-
-// //   if (isLoading) return <Text>Loading...</Text>;
-
-// //   const handleLogout = async () => {
-// //     try {
-
-// //       await AsyncStorage.removeItem("user");
-// //       // to remove cache after logout
-// //       queryClient.removeQueries({ queryKey: ["user"] });
-// //     // reset navigation to LoginScreenRQ (remove all screens)
-// //       navigation.reset({
-// //         index: 0,
-// //         routes: [{ name: "LoginScreenRQ" }],
-// //       });
-// //       console.log("Logout successful");
-// //     } catch (error) {
-// //       console.log("Logout error:", error);
-// //     }
-// //   };
-
-// //   return (
-// //     <View>
-// //       {user ? <Text>Hello {user.name}</Text> : <Text>Guest</Text>}
-// //       <CustomButton title="Logout" onPress={handleLogout} />
-// //     </View>
-// //   );
-// // }
 
 
+import CustomButton from "@/components/ui/CustomButton";
 import PackageCard from "@/components/ui/PackageCard";
+import PackagesList from "@/components/ui/PackagesList";
+import { useQueryPackages } from "@/hooks/useQueryPackages";
 import { User } from "@/models/userModelRQ";
 import { RootStackNavigationProp } from "@/navigation/Rootstack";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { getUserData } from "../utils/storage/cacheUser";
-export default function HomeScreen() {
+import { Image, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { getUserData, handleLogout } from "../utils/storage/cacheUser";
 
+export default function HomeScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const { t } = useTranslation(); 
   const [userData, setUserData] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+      const { state, data: packageData } = useQueryPackages()
   useEffect(() => {
     const fetchUserData = async () => {
       const userData = await getUserData();
@@ -96,7 +60,7 @@ export default function HomeScreen() {
 />
     </View> */}
 
-      {/* <View style={styles.card}>
+      <View style={styles.card}>
         <Text style={styles.greeting}>
           {userData ? `${t("Hello")}, ${userData.name}` : t("Welcome, Guest!")}
         </Text>
@@ -105,12 +69,22 @@ export default function HomeScreen() {
           onPress={() => handleLogout(navigation)}
           style={styles.button as ViewStyle}
         />
-      </View> */}
+      </View>
        <View style={styles.packagesContainer} > 
-          <Text style={styles.title} >الباقات </Text>
-          <Text style={styles.subtitle} >كل الباقات </Text>
+          <Text style={styles.title}>{t("HomeScreen.packages")} </Text>
+          <Text style={styles.subtitle} >{t("HomeScreen.allPackages")} </Text>
        </View>
-      <PackageCard  />
+       {/* <FlatList  
+      data={packageData}
+      keyExtractor={(item) => item.id.toString()}
+      contentContainerStyle={{ paddingVertical: 10 }}
+      renderItem={({ item }) => <PackageCard item={item} />}
+    /> */}
+    <PackagesList 
+  data={packageData} 
+  renderItem={({ item }) => <PackageCard item={item} />}
+/>
+
     </View>
   );
 }
@@ -124,7 +98,6 @@ const styles = StyleSheet.create({
 header_container:{
   flexDirection: "row",
   alignItems: "center",
-
 },
 headerTitleContainer:{
   flex: 1,
@@ -162,8 +135,7 @@ navText:{
         fontSize: 21,
         fontWeight: '300', 
         lineHeight: 28.14, 
-        fontFamily: 'Kalligraaf Arabic', 
-
+        fontFamily: 'Kalligraaf Arabic',
 },
   loading: {
     flex: 1,
@@ -220,3 +192,4 @@ navText:{
     marginTop:30,
   },
 });
+

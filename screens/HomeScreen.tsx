@@ -40,14 +40,14 @@
 // // }
 
 
-import CustomButton from "@/components/ui/CustomButton";
+import PackageCard from "@/components/ui/PackageCard";
 import { User } from "@/models/userModelRQ";
 import { RootStackNavigationProp } from "@/navigation/Rootstack";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { getUserData, handleLogout } from "../utils/storage/cacheUser";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { getUserData } from "../utils/storage/cacheUser";
 export default function HomeScreen() {
 
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -68,7 +68,35 @@ export default function HomeScreen() {
   if (isLoading) return <Text style={styles.loading}>{t("loading")}</Text>;
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
+     <View style={styles.header_container}>
+
+      <View style={styles.notificationContainer}>
+        <Image
+          source={require("../assets/images/notification.png")}
+        />
+        
+      </View>
+            <View style={styles.headerTitleContainer}>
+        <Text style={styles.headerTitle}>الرئيسية</Text>
+      </View>
+    </View>
+    {/* <View style={styles.nav}>
+      <View >
+      <Text style={styles.navText}>
+    {`احجز حصص فردية اون لاين\nو حضورية`}
+</Text>
+    </View>
+   <CustomButton
+    onPress={() => console.log("clicked")}
+    title="سجل الان"
+    style={[
+        styles.button, 
+        { backgroundColor: '#FFFFFF' } 
+    ] as StyleProp<ViewStyle>} 
+/>
+    </View> */}
+
+      {/* <View style={styles.card}>
         <Text style={styles.greeting}>
           {userData ? `${t("Hello")}, ${userData.name}` : t("Welcome, Guest!")}
         </Text>
@@ -77,7 +105,12 @@ export default function HomeScreen() {
           onPress={() => handleLogout(navigation)}
           style={styles.button as ViewStyle}
         />
-      </View>
+      </View> */}
+       <View style={styles.packagesContainer} > 
+          <Text style={styles.title} >الباقات </Text>
+          <Text style={styles.subtitle} >كل الباقات </Text>
+       </View>
+      <PackageCard  />
     </View>
   );
 }
@@ -85,10 +118,53 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f4f6f8",
-    justifyContent: "center",
-    alignItems: "center",
     padding: 20,
+    alignItems:"center",
   },
+header_container:{
+  flexDirection: "row",
+  alignItems: "center",
+
+},
+headerTitleContainer:{
+  flex: 1,
+},
+headerTitle:{
+ color: '#414E75', 
+         fontSize: 26,    
+      fontWeight: '500', 
+        textAlign: 'center',
+}
+,
+notificationContainer:{
+  width: 41,
+  height: 41,
+  borderRadius: 20,
+  backgroundColor: "#E8EFFF",
+  alignItems: "center",
+  justifyContent: "center",
+  borderWidth: 1,
+  borderColor: "#ECEFFF",
+},
+nav:{
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "#2463EC",
+  width:370,
+  height: 110,
+  borderRadius: 8,
+   marginLeft: 30, 
+  marginTop:131.93,
+},
+navText:{
+  color: 'white', 
+        fontSize: 21,
+        fontWeight: '300', 
+        lineHeight: 28.14, 
+        fontFamily: 'Kalligraaf Arabic', 
+
+},
   loading: {
     flex: 1,
     textAlign: "center",
@@ -124,5 +200,23 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "600",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#333",
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "400",
+    color: "#333",
+  },
+  packagesContainer: {
+    width: "100%",
+    alignItems: "center",
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-between",
+    marginTop:30,
   },
 });

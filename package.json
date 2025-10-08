@@ -45,6 +45,7 @@
     "react-native": "0.81.4",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-reanimated": "~4.1.1",
+    "react-native-responsive-dimensions": "^3.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
     "react-native-snackbar": "^2.9.0",
@@ -65,9 +66,11 @@
   "expo": {
     "doctor": {
       "reactNativeDirectoryCheck": {
-        "exclude": ["react-native-snackbar", "react-native-vector-icons"]
+        "exclude": [
+          "react-native-snackbar",
+          "react-native-vector-icons"
+        ]
       }
     }
   }
 }
-

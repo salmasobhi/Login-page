@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    color: "#fff",
+    color: " #2562EB",
     fontSize: 16,
     fontWeight: "bold",
   },

@@ -13,6 +13,10 @@ const apiService = {
     const response = await axiosInstance.post(endpoint, data);
     return response.data;
   },
+  getAll: async (endpoint: string, params?: object) => {
+    const response = await axiosInstance.get(endpoint, { params });
+    return response.data;
+  },
 };
 
 export default apiService;

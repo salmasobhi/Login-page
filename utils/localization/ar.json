@@ -9,6 +9,19 @@
     "passwordRequired": "كلمة المرور مطلوبة",
     "passwordLength": "كلمة المرور يجب أن تكون على الأقل 8 أحرف"
   },
+  "HomeScreen": {
     "Hello": "مرحبا",
-    "Logout": "تسجيل الخروج"
+    "Logout": "تسجيل الخروج",
+    "packages": "الباقات",
+    "allPackages": "كل الباقات"
+  },
+  "packageCard": {
+    "sessionTime": "مدة الحصة",
+    "minutes": "دقيقة",
+    "sessionsCount": "عدد الحصص",
+    "price": "السعر",
+    "rialSaudi": "ريال سعودي",
+    "priceIncludesTax": "السعر شامل الضريبة",
+    "bookMonthlyPackage": "احجز باقة شهرية"
+  }
 }

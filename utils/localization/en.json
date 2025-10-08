@@ -9,7 +9,20 @@
     "passwordRequired": "Password is required",
     "passwordLength": "Password must be at least 8 characters"
   },
+   "HomeScreen": {
   "Hello": "Hello",
-  "Logout": "Logout"
-}
+  "Logout": "Logout",
+  "packages": "Packages",
+  "allPackages": "All Packages"
+   },
+  "packageCard": {
+    "sessionTime": "Session Time",
+    "minutes": "Minutes",
+    "sessionsCount": "Sessions Count",
+    "price": "Price",
+    "rialSaudi": "Rial Saudi",
+    "priceIncludesTax": "Price includes tax",
+    "bookMonthlyPackage": "Book Monthly Package"
 
+  }
+}

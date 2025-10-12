@@ -7,7 +7,6 @@ const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
-
 const apiService = {
   create: async (endpoint: string, data: any) => {
     const response = await axiosInstance.post(endpoint, data);
@@ -15,10 +14,10 @@ const apiService = {
   },
   getAll: async (endpoint: string, params?: object) => {
     const response = await axiosInstance.get(endpoint, { params });
+    console.log("axiosReasbons" , response.data)
     return response.data;
   },
 };
-
 export default apiService;
 export const loginApi = async (mobile: string, password: string) => {
   const body = {

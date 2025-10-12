@@ -1,97 +1,70 @@
 
-// import { useQueryPackages } from '@/hooks/useQueryPackages';
+// // components/Packagecard.jsx
 // import React from 'react';
-// import { ActivityIndicator, Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native';
-
+// import { useTranslation } from 'react-i18next';
+// import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 // const SECONDARY_BLUE = '#414E75';
-// const PRIMARY_BLUE_TEXT = '#2562EB';
-
-// const PackageCard = () => {
-//   const { state, data: packageData } = useQueryPackages()
-  
-//   if (state === "loading") return (
-//     <View style={styles.loaderContainer}>
-//       <ActivityIndicator size="large" color={PRIMARY_BLUE_TEXT} />
-//     </View>
-//   );
-
-//   if (state === "error") return <Text style={styles.stateText}>حدث خطأ أثناء تحميل البيانات</Text>;                                                                             
-//   if (state === "empty") return <Text style={styles.stateText}>لا توجد باقات متاحة</Text>;
-
+// const { width, height } = Dimensions.get('window');
+//   const PackageCard = ({ item }: { item: any }) => {
+//     const { t } = useTranslation();
 //   return (
-//     <FlatList
-//       data={packageData}
-//       keyExtractor={(item) => item.id.toString()}
-//       contentContainerStyle={{ paddingVertical: 10 }}
-//       renderItem={({ item }) => (
-//         <View style={styles.cardContainer}>
+//     <View style={styles.cardContainer}>
 
-//           <View style={styles.infoSection}>
-//             <Text style={styles.packageTitle}>{item.title}</Text>
-//             <View> 
-// <View style={styles.detailRow}>
-//              <Image source={require('@/assets/images/Rang.png')} />
-//               <Text style={styles.detailText}>
-//                 مدة الحصة: {item.session_time_in_minutes} دقيقة
-//               </Text>
-//             </View > 
-//             <View style={styles.detailRow}>
-//              <Image source={require('@/assets/images/count.png')} />
-//               <Text style={styles.detailText}>
-//                 عدد الحصص: {item.sessions_count}
-//               </Text>
-//             </View>
-//             </View>
-            
-//           </View>
-
-//    {/* left section */}
-//          <View style={styles.actionSectionContainer}>
-//   <View style={styles.actionSection}>
-//     <Text style={styles.priceText}>  السعر{item.price} ريال سعودي </Text>
-//     <Text style={styles.taxText}>السعر شامل الضريبة</Text>
-//   </View>
-//   <View style={styles.actionSection}>
-//     <Text style={styles.priceText}>احجز باقة شهرية</Text>
-//   </View>
-// </View>
-
+//       {/* Info Section */}
+//       <View style={styles.infoSection}>
+//         <Text style={styles.packageTitle}>{item.title}</Text>
+//         <View style={styles.detailRow}>
+//           <Image source={require('@/assets/images/Rang.png')} />
+//           <Text style={styles.detailText}>
+//             {t("packageCard.sessionTime")}: {item.session_time_in_minutes} {t("packageCard.minutes")}
+//           </Text>
 //         </View>
-//       )}
-//     />
+//         <View style={styles.detailRow}>
+//           <Image source={require('@/assets/images/count.png')} />
+//           <Text style={styles.detailText}>
+//             {t("packageCard.sessionsCount")}: {item.sessions_count}
+//           </Text>
+//         </View>
+//       </View>
+
+//       {/* Action Section */}
+//       <View style={styles.actionSectionContainer}>
+//         <View style={styles.actionSection}> 
+//           <Text style={styles.priceText}>{t("packageCard.price")} {item.price} {t("packageCard.rialSaudi")}</Text>
+//           <Text style={styles.taxText}>{t("packageCard.priceIncludesTax")}</Text>
+//         </View>
+//         <View style={styles.actionSection}>
+//           <Text style={styles.priceText}>{t("packageCard.bookMonthlyPackage")}</Text>
+//         </View>
+//       </View>
+
+//     </View>
 //   );
 // };
 
 // export default PackageCard;
-// const { width, height } = Dimensions.get('window');
-// const styles = StyleSheet.create({
 
-//   stateText: {
-//     textAlign: 'center',
-//     marginTop: 20,
-//     fontSize: 16,
-//     color: SECONDARY_BLUE,
-//   },
+// const styles = StyleSheet.create({
 //   cardContainer: {
-//   width: width * 0.9,   
-//   height: height * 0.2,
-//   borderRadius: 8,
-//   borderWidth: 1,
-//   borderColor: '#ccc',
-//   backgroundColor: '#fff',
-//   alignSelf: 'center',
-//   marginBottom: height * 0.05,
-//   flexDirection: 'row',
-//   justifyContent: 'space-between',
-//   alignItems: 'center',
-//   padding: 10,
+//     width: width * 0.9,   
+//     height: height * 0.2,
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     borderColor: '#ccc',
+//     backgroundColor: '#fff',
+//     alignSelf: 'center',
+//     marginBottom: height * 0.05,
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
+//     padding: 10,
 //   },
 //   infoSection: {
 //     flex: 1,
 //     paddingRight: 10,
-//     gap:10,
+//     gap: 10,
 //   },
-//    actionSectionContainer: {
+//   actionSectionContainer: {
 //     padding: 10,
 //     flexDirection: 'column',
 //     justifyContent: 'space-between',
@@ -103,7 +76,7 @@
 //     borderRadius: 10,
 //     padding: 15,
 //     width: width * 0.5,
-//     height:height*0.08,
+//     height: height * 0.08,
 //     alignItems: 'center',
 //   },
 //   packageTitle: {
@@ -116,10 +89,10 @@
 //     flexDirection: 'row',
 //     alignItems: 'center',
 //     marginBottom: 6,
-//     gap:5,
+//     gap: 5,
 //   },
 //   detailText: {
-//     fontSize:9,
+//     fontSize: 9,
 //     fontWeight: '400',
 //     color: '#444',
 //     marginRight: 6,
@@ -135,58 +108,64 @@
 //     color: SECONDARY_BLUE,
 //     marginBottom: 10,
 //   },
-//   loaderContainer: {
-//   flex: 1,
-//   justifyContent: "center",
-//   alignItems: "center",
-//   paddingTop: 100,
-// }
 // });
 
 
 
-
-
-
-// components/Packagecard.jsx
+// components/PackageCard.tsx
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+
 const SECONDARY_BLUE = '#414E75';
-const { width, height } = Dimensions.get('window');
-  const PackageCard = ({ item }: { item: any }) => {
-    const { t } = useTranslation();
+
+type PackageCardProps = {
+  item: {
+    title: string;
+    session_time_in_minutes: number;
+    sessions_count: number;
+    price: number;
+  };
+};
+
+const PackageCard: React.FC<PackageCardProps> = ({ item }) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.cardContainer}>
-
       {/* Info Section */}
       <View style={styles.infoSection}>
         <Text style={styles.packageTitle}>{item.title}</Text>
+
         <View style={styles.detailRow}>
           <Image source={require('@/assets/images/Rang.png')} />
           <Text style={styles.detailText}>
-            {t("packageCard.sessionTime")}: {item.session_time_in_minutes} {t("packageCard.minutes")}
+            {t('packageCard.sessionTime')}: {item.session_time_in_minutes} {t('packageCard.minutes')}
           </Text>
         </View>
+
         <View style={styles.detailRow}>
           <Image source={require('@/assets/images/count.png')} />
           <Text style={styles.detailText}>
-            {t("packageCard.sessionsCount")}: {item.sessions_count}
+            {t('packageCard.sessionsCount')}: {item.sessions_count}
           </Text>
         </View>
       </View>
 
       {/* Action Section */}
       <View style={styles.actionSectionContainer}>
-        <View style={styles.actionSection}> 
-          <Text style={styles.priceText}>{t("packageCard.price")} {item.price} {t("packageCard.rialSaudi")}</Text>
-          <Text style={styles.taxText}>{t("packageCard.priceIncludesTax")}</Text>
-        </View>
         <View style={styles.actionSection}>
-          <Text style={styles.priceText}>{t("packageCard.bookMonthlyPackage")}</Text>
+          <Text style={styles.priceText}>
+            {t('packageCard.price')} {item.price} {t('packageCard.rialSaudi')}
+          </Text>
+          <Text style={styles.taxText}>{t('packageCard.priceIncludesTax')}</Text>
+        </View>
+
+        <View style={styles.actionSection}>
+          <Text style={styles.priceText}>{t('packageCard.bookMonthlyPackage')}</Text>
         </View>
       </View>
-
     </View>
   );
 };
@@ -195,66 +174,67 @@ export default PackageCard;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: width * 0.9,   
-    height: height * 0.2,
-    borderRadius: 8,
+    width: responsiveWidth(90),
+    height: responsiveHeight(20),
+    borderRadius: responsiveWidth(2),
     borderWidth: 1,
     borderColor: '#ccc',
     backgroundColor: '#fff',
     alignSelf: 'center',
-    marginBottom: height * 0.05,
+    marginBottom: responsiveHeight(5),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
+    padding: responsiveWidth(3),
   },
   infoSection: {
     flex: 1,
-    paddingRight: 10,
-    gap: 10,
+    paddingRight: responsiveWidth(2),
+    gap: responsiveHeight(1),
   },
   actionSectionContainer: {
-    padding: 10,
+    padding: responsiveWidth(2),
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 10,
+    gap: responsiveHeight(1.2),
   },
   actionSection: {
-    backgroundColor: '#F3F5F8', 
-    borderRadius: 10,
-    padding: 15,
-    width: width * 0.5,
-    height: height * 0.08,
+    backgroundColor: '#F3F5F8',
+    borderRadius: responsiveWidth(2.5),
+    padding: responsiveWidth(3.5),
+    width: responsiveWidth(45),
+    height: responsiveHeight(8),
     alignItems: 'center',
+    justifyContent: 'center',
   },
   packageTitle: {
-    fontSize: 18,
+    fontSize: responsiveFontSize(2.2),
     fontWeight: '700',
     color: SECONDARY_BLUE,
-    marginBottom: 10,
+    marginBottom: responsiveHeight(1),
   },
   detailRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
-    gap: 5,
+    marginBottom: responsiveHeight(0.7),
+    gap: responsiveWidth(1),
   },
   detailText: {
-    fontSize: 9,
+    fontSize: responsiveFontSize(1.4),
     fontWeight: '400',
     color: '#444',
-    marginRight: 6,
+    marginRight: responsiveWidth(1.5),
   },
   priceText: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(1.9),
     fontWeight: 'bold',
-    color: '#414E75',
+    color: SECONDARY_BLUE,
   },
   taxText: {
-    fontSize: 9,
+    fontSize: responsiveFontSize(1.3),
     fontWeight: '400',
     color: SECONDARY_BLUE,
-    marginBottom: 10,
+    marginTop: responsiveHeight(0.5),
   },
 });

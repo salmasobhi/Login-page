@@ -17,11 +17,11 @@
   },
   "packageCard": {
     "sessionTime": "مدة الحصة",
-    "minutes": "دقيقة",
     "sessionsCount": "عدد الحصص",
     "price": "السعر",
     "rialSaudi": "ريال سعودي",
     "priceIncludesTax": "السعر شامل الضريبة",
-    "bookMonthlyPackage": "احجز باقة شهرية"
+    "bookMonthlyPackage": "احجز باقة شهرية",
+    "sessions": "حصص"
   }
 }

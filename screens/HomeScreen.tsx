@@ -211,15 +211,15 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { getUserData, handleLogout } from "../utils/storage/cacheUser";
-
 export default function HomeScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const { t } = useTranslation();
   const [userData, setUserData] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { state, data: packageData } = useQueryPackages();
-
+ 
   useEffect(() => {
     const fetchUserData = async () => {
       const user = await getUserData();
@@ -231,10 +231,10 @@ export default function HomeScreen() {
     };
     fetchUserData();
   }, []);
-
-  if (isLoading) return <Text style={styles.loading}>{t("loading")}</Text>;
+   
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
       {/* Header */}
       <View style={styles.header_container}>
         <View style={styles.notificationContainer}>
@@ -244,7 +244,6 @@ export default function HomeScreen() {
           <Text style={styles.headerTitle}>الرئيسية</Text>
         </View>
       </View>
-
       {/* Nav Section */}
       <View style={styles.nav}>
         <View>
@@ -257,7 +256,6 @@ export default function HomeScreen() {
           title="سجل الان"
           style={[
             styles.button,
-
             { backgroundColor: "#FFFFFF",margin : responsiveWidth(2)},
           ] as StyleProp<ViewStyle>}
         />
@@ -284,7 +282,7 @@ export default function HomeScreen() {
         data={packageData}
         renderItem={({ item }) => <PackageCard item={item} />}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -309,6 +307,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(3),
     fontWeight: "500",
     textAlign: "center",
+    fontFamily: "Alexandria-Bold",
   },
   notificationContainer: {
     width: responsiveWidth(11),
@@ -334,9 +333,8 @@ const styles = StyleSheet.create({
   navText: {
     color: "white",
     fontSize: responsiveFontSize(2.3),
-    fontWeight: "400",
     lineHeight: responsiveHeight(3),
-    fontFamily: "Kalligraaf Arabic",
+    fontFamily: "Alexandria-Bold",
   },
   loading: {
     flex: 1,

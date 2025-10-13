@@ -9,6 +9,7 @@
     "passwordRequired": "Password is required",
     "passwordLength": "Password must be at least 8 characters"
   },
+  "appName": "Doroosi",
    "HomeScreen": {
   "Hello": "Hello",
   "Logout": "Logout",

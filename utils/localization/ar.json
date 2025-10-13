@@ -9,6 +9,7 @@
     "passwordRequired": "كلمة المرور مطلوبة",
     "passwordLength": "كلمة المرور يجب أن تكون على الأقل 8 أحرف"
   },
+  "appName": "دروسي",
   "HomeScreen": {
     "Hello": "مرحبا",
     "Logout": "تسجيل الخروج",

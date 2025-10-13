@@ -131,7 +131,6 @@ type PackageCardProps = {
 };
 const PackageCard: React.FC<PackageCardProps> = ({ item }) => {
   const { t } = useTranslation();
-
   return (
     <View style={styles.cardContainer}>
       {/* Info Section */}

@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "App",
+    "name": "Doroosi",
     "slug": "App",
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "app",
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -13,9 +14,10 @@
     "android": {
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.salma_sobhi.App",
+      "package": "com.salma_sobhi.Doroosi",
       "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/icon.png",
+         "backgroundColor": "transparent"
       }
     },
     "web": {
@@ -33,7 +35,7 @@
         "projectId": "b18a58be-c477-4a2e-b9b2-420fd9a06642"
       }
     },
-    "runtimeVersion": {
+     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {

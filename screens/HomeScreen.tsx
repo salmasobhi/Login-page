@@ -196,6 +196,7 @@
 
 
 // screens/HomeScreen.tsx
+import ProductCardLoading from "@/components/loading/ProductCardLoading";
 import CustomButton from "@/components/ui/CustomButton";
 import PackageCard from "@/components/ui/PackageCard";
 import PackagesList from "@/components/ui/PackagesList";
@@ -203,6 +204,7 @@ import { useQueryPackages } from "@/hooks/useQueryPackages";
 import { User } from "@/models/userModelRQ";
 import { RootStackNavigationProp } from "@/navigation/Rootstack";
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
@@ -219,7 +221,7 @@ export default function HomeScreen() {
   const [userData, setUserData] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { state, data: packageData } = useQueryPackages();
- 
+   
   useEffect(() => {
     const fetchUserData = async () => {
       const user = await getUserData();
@@ -231,10 +233,11 @@ export default function HomeScreen() {
     };
     fetchUserData();
   }, []);
-   
+   useFonts({
+    "Alexandria-Regular": require("../assets/fonts/Alexandria-Regular.ttf"),
+  });
   return (
     <SafeAreaView style={styles.container}>
-
       {/* Header */}
       <View style={styles.header_container}>
         <View style={styles.notificationContainer}>
@@ -278,13 +281,26 @@ export default function HomeScreen() {
         <Text style={styles.title}>{t("HomeScreen.packages")}</Text>
         <Text style={styles.subtitle}>{t("HomeScreen.allPackages")}</Text>
       </View>
+      {/* render a list of skeleton cards while loading */}
+      {state === "loading" ? (
+          <View>
+          <ProductCardLoading />
+          <ProductCardLoading />
+          <ProductCardLoading />
+          <ProductCardLoading />
+        </View>
+      ) : (
       <PackagesList
         data={packageData}
         renderItem={({ item }) => <PackageCard item={item} />}
       />
+      )
+    }
     </SafeAreaView>
-  );
+    )
+  
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -307,7 +323,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(3),
     fontWeight: "500",
     textAlign: "center",
-    fontFamily: "Alexandria-Bold",
+    fontFamily: "Alexandria-Regular",
   },
   notificationContainer: {
     width: responsiveWidth(11),

@@ -17,14 +17,15 @@
       "package": "com.salma_sobhi.Doroosi",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
-         "backgroundColor": "transparent"
+        "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
       "output": "single"
     },
     "plugins": [
-      "expo-localization"
+      "expo-localization",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
@@ -35,7 +36,7 @@
         "projectId": "b18a58be-c477-4a2e-b9b2-420fd9a06642"
       }
     },
-     "runtimeVersion": {
+    "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {

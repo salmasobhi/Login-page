@@ -240,15 +240,16 @@ const styles = StyleSheet.create({
     gap: responsiveWidth(1),
   },
   detailText: {
-    fontSize: responsiveFontSize(1.5),
+    fontSize: responsiveFontSize(1.4),
     fontWeight: 400,
     color: "#414E75",
     fontFamily: "Alexandria-Regular",
   },
   priceText: {
-    fontSize: responsiveFontSize(1.9),
+    fontSize: responsiveFontSize(1.5),
     fontWeight: "bold",
     color: SECONDARY_BLUE,
+    fontFamily: "Alexandria-Regular",
   },
   taxText: {
     fontSize: responsiveFontSize(1.3),

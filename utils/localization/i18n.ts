@@ -16,7 +16,6 @@ const resources = {
   ar: { translation: ar }
 };
 
-
 // Initialize i18n with saved language if available
 const initializeWithSavedLanguage = async () => {
   try {
@@ -53,7 +52,6 @@ const applyRTLSettings = (language: string) => {
     I18nManager.forceRTL(false);
   }
 };
-
 // Handle language change
 i18n.on("languageChanged", async () => {
   const currentLang = i18n.language;

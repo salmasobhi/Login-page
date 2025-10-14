@@ -1,8 +1,8 @@
-
+// create component to render a card 
 // components/ui/CustomList.tsx
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
-// Add type for item
+// Add type for item 
 type CustomListProps = {
   data: any[];
   renderItem: ({ item }: { item: any }) => React.ReactElement;
@@ -16,7 +16,7 @@ const PackagesList = ({ data, renderItem }: CustomListProps) => {
       renderItem={renderItem}
       contentContainerStyle={styles.listContainer}
     />
-  );
+  )
 };
 
 const styles = StyleSheet.create({

@@ -1,20 +1,26 @@
 {
   "expo": {
     "name": "Doroosi",
-    "slug": "App",
+    "description": "Doroosi is a mobile education application .",
+    "slug": "Doroosi",
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "app",
     "icon": "./assets/images/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
+      "splash": {
+      "image": "./assets/images/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.salma_sobhi.Doroosi",
+      "package": "com.EDU.Doroosi",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#FFFFFF"

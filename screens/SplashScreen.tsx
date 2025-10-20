@@ -13,7 +13,6 @@ const SplashScreen: React.FC = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   useEffect(() => {
-    // نبدأ أنيميشن الفيد + الزووم مع بعض
     Animated.sequence([
       Animated.parallel([
         Animated.timing(fadeAnim, {

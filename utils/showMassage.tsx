@@ -1,8 +1,6 @@
 // utils/showMessage.ts
 import Toast from "react-native-toast-message";
-
 type MessageType = "success" | "error";
-
 const showMessage = (message: string, type: MessageType = "success"): void => {
   Toast.show({
     type,
@@ -11,5 +9,4 @@ const showMessage = (message: string, type: MessageType = "success"): void => {
     position: "bottom",
   });
 };
-
 export default showMessage;

@@ -25,5 +25,33 @@
     "priceIncludesTax": "Price includes tax",
     "bookMonthlyPackage": "Book Monthly Package"
 
+  },
+
+  "Onboarding": {
+    "Slides": [
+      {
+        "title": "Doroosi Platform",
+        "subtitle": "An educational platform offering individual lessons for students, online (remote) and offline (at home), with many other features and possibilities."
+             , "image":"Intro1.png"
+      },
+      {
+        "title": "Flexible and Varied Plans",
+        "subtitle": "You can choose your lesson plan price according to your needs, within packages defined by duration and number of lessons."
+           ,   "image":"Intro2.png"
+      },
+      {
+        "title": "Reschedule Lessons",
+        "subtitle": "No more being constrained by lesson times, as you can reschedule lessons up to 24 hours before the scheduled time."
+           ,   "image":"Intro3.png"
+      },
+      {
+        "title": "Higher Focus Without Distraction",
+        "subtitle": "No need to distract your attention during the lesson by taking notes, as you can record the lesson for later review and benefit."
+         ,
+      "image":"Intro4.png"
+      }
+    ]
   }
+
+
 }

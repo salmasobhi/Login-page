@@ -133,7 +133,7 @@
 
 
 
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -147,14 +147,14 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import CustomButton from "../components/ui/CustomButton";
-import CustomInput from "../components/ui/CustomInput";
-import { useLoginMutation } from "../hooks/useLoginMutation";
-import i18n from "../utils/localization/i18n";
-import { FormValues, validate } from "../validation/validationLogin";
+import CustomButton from "../../components/ui/CustomButton";
+import CustomInput from "../../components/ui/CustomInput";
+import { useLoginMutation } from "../../hooks/useLoginMutation";
+import i18n from "../../utils/localization/i18n";
+import { FormValues, validate } from "../../validation/validationLogin";
 const LoginScreenRQ: React.FC = () => {
   const loginMutation = useLoginMutation();
-  const navigation = useNavigation();
+   const router = useRouter();
   const { t } = useTranslation();
   const [_, setLangToggle] = useState(false);
   const formik = useFormik<FormValues>({
@@ -163,7 +163,7 @@ const LoginScreenRQ: React.FC = () => {
     onSubmit: (values) => {
       loginMutation.mutate(values, {
         onSuccess: () => {
-          (navigation as any).navigate("HomeScreen");
+           router.replace("/(main)/homeScreen"); 
         },
       });
     },
@@ -195,8 +195,8 @@ const LoginScreenRQ: React.FC = () => {
     <Image
       source={
         i18n.language === "ar"
-          ? require("../assets/images/uk.png")
-          : require("../assets/images/sa.png")
+          ? require("../../assets/images/uk.png")
+          :require("../../assets/images/sa.png")
       }
       style={styles.flag}
     />

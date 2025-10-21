@@ -1,8 +1,12 @@
+
+
 import { User } from "@/models/userModelRQ";
 import { queryClient } from "@/ReactotronConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RootStackNavigationProp } from "../../navigation/Rootstack";
+import { router } from "expo-router";
+
 const USER_KEY = "user";
+
 export const cacheUser = async (user: User): Promise<User> => {
   try {
     await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -21,6 +25,7 @@ export const getUserData = async (): Promise<User | null> => {
     throw error;
   }
 };
+
 const LANGUAGE_KEY = "user_language";
 export const saveUserLanguage = async (language: string) => {
   try {
@@ -30,6 +35,7 @@ export const saveUserLanguage = async (language: string) => {
     console.log("Error saving language preference:", error);
   }
 };
+
 export const getUserLanguage = async (): Promise<string | null> => {
   try {
     const language = await AsyncStorage.getItem(LANGUAGE_KEY);
@@ -41,16 +47,14 @@ export const getUserLanguage = async (): Promise<string | null> => {
   }
 };
 
-export const handleLogout = async (navigation: RootStackNavigationProp) => {
-    try {
-      await AsyncStorage.removeItem("user");
-      queryClient.removeQueries({ queryKey: ["user"] });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "LoginScreenRQ" }],
-      });
-      console.log("Logout successful");
-    } catch (error) {
-      console.log("Logout error:", error);
-    }
-  };
+export const handleLogout = async () => {
+  try {
+    await AsyncStorage.removeItem("user");
+    queryClient.removeQueries({ queryKey: ["user"] });
+   router.replace("/(auth)/loginScreenRQ");
+
+    console.log("Logout successful");
+  } catch (error) {
+    console.log("Logout error:", error);
+  }
+};

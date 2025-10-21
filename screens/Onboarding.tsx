@@ -220,7 +220,7 @@ export type OnboardingProps = {
 };
 
 const Onboarding: React.FC<OnboardingProps> = ({
-  slides = [], // fallback
+  slides = [], 
   currentSlide,
   flatListRef,
   handleNext,

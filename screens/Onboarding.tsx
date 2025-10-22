@@ -238,10 +238,11 @@ const Onboarding: React.FC<OnboardingProps> = ({
     <View style={styles.container}>
       <Animated.FlatList
         ref={flatListRef}
-        data={slides}
+         data={slides}
         keyExtractor={(item) => item.id?.toString() || Math.random().toString()}
         horizontal
         pagingEnabled
+        inverted={I18nManager.isRTL}
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={handleScrollEnd}
         onScroll={Animated.event(
@@ -260,8 +261,8 @@ const Onboarding: React.FC<OnboardingProps> = ({
                 style={[
                   styles.dotsContainer,
                   {
-                    flexDirection: I18nManager.isRTL ? "row" : "row-reverse",
- justifyContent: I18nManager.isRTL ? "flex-start" : "flex-end",
+                    flexDirection: I18nManager.isRTL ? "row-reverse" : "row",
+      justifyContent: I18nManager.isRTL ? "flex-end" : "flex-start",
                   },
                 ]}
               >
@@ -295,21 +296,24 @@ const Onboarding: React.FC<OnboardingProps> = ({
         )}
       />
 
-      <View style={styles.buttonContainer}>
-        {currentSlide < slideCount - 1 && (
-          <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-            <Text style={styles.skipText}>{t("Onboarding.skip")}</Text>
-          </TouchableOpacity>
-        )}
+<View style={styles.buttonContainer}>
+  {currentSlide < slideCount - 1 ? (
+    <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
+      <Text style={styles.skipText}>{t("Onboarding.skip")}</Text>
+    </TouchableOpacity>
+  ) : (
+    <View style={{ width: 80 }} />
+  )}
 
-        <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-          <MaterialIcons
-            name={I18nManager.isRTL ? "arrow-forward-ios" : "arrow-back-ios"}
-            size={24}
-            color="#fff"
-          />
-        </TouchableOpacity>
-      </View>
+  <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
+    <MaterialIcons
+      name={I18nManager.isRTL ? "arrow-back-ios" : "arrow-back-ios"}
+      size={24}
+      color="#fff"
+    />
+  </TouchableOpacity>
+</View>
+
     </View>
   );
 };
@@ -338,8 +342,10 @@ const styles = StyleSheet.create({
     margin: 5,
     fontFamily: "Alexandria-Regular",
   },
-  dotsContainer: { marginBottom: 30, marginTop: 20, alignItems: "center" },
-  dot: { height: 8, borderRadius: 4, marginHorizontal: 4 },
+  dotsContainer: { marginBottom: 30, marginTop: 20 ,
+    },
+  dot: { height: 8, borderRadius: 4, marginHorizontal: 4 
+},
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

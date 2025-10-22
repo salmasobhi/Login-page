@@ -214,6 +214,7 @@ import {
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { requestCameraPermission } from '../utils/notifications';
 import { getUserData, handleLogout } from "../utils/storage/cacheUser";
 export default function HomeScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -232,6 +233,32 @@ export default function HomeScreen() {
       setIsLoading(false);
     };
     fetchUserData();
+  }, []);
+
+  // notification permission
+// useEffect(() => {
+//   const checkAndRequest = async () => {
+//     await requestNotificationPermission(); 
+//   };
+//   checkAndRequest();
+// }, []);
+
+//  useEffect(() => {
+//     (async () => {
+//       const granted = await requestAndroidNotificationsPermission();
+//       if (granted) {
+//         console.log("✅ الإشعارات مسموح بيها");
+//       } else {
+//         console.log("❌ المستخدم رفض الإشعارات");
+//       }
+//     })();
+//   }, []);
+  useEffect(() => {
+    const checkPermission = async () => {
+      await requestCameraPermission(); // ← هنا بتستخدمي await عادي
+    };
+
+    checkPermission(); // ← استدعاء الدالة الداخلية
   }, []);
    useFonts({
     "Alexandria-Regular": require("../assets/fonts/Alexandria-Regular.ttf"),
